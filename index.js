@@ -1,166 +1,48 @@
-const fs = require("fs")
-// console.log("🚀 ~ file: index.js:2 ~ fs", fs)
-// fs sincronico
+// import http from "http";
 
-// fs.writeFileSync para escribir un archivo 
-const write = () => fs.writeFileSync('./text.txt', "hola como estan?", 'utf-8')
-//  write()
-// fs.readFileSync esto es para leer un archivo de forma asincronica
-const read = () => fs.readFileSync('./package.json', 'utf-8')
-//  console.log("🚀 ~ file: index.js:9 ~ read", read())
+// const serverApp = http.createServer((peticion, respuesta) => {
+//     respuesta.end("Hola Curso UP")
+// })
 
-// fs.appendFileSync esto es para actualizar el archivo
-
-const append = () => fs.appendFileSync("./text.txt", "\npor lo general son gentes drogadas", "utf-8")
-// append()
-
-// fs.unlinkSync eliminar un archivo
-
-const del = () => fs.unlinkSync('./text.txt')
-// try {
-//     del()
-// } catch (error) {
-//     console.log("🚀 ~ file: index.js:23 ~ error", error.code)
+// const server = serverApp.listen(8080, () => {
+//     console.log("servidor ok")
 // }
-// del()
+// )
+// -------------------------------------------------------------------------
+// pern= postgrest(sql), express, react, node
 
-// fs.existsSync esto es para saber si el archivo existe
-const exist = () => fs.existsSync('./text.txt')
-// console.log("🚀 ~ file: index.js:24 ~ exist", exist())
-
-// fs.mkdirSync creacion de una carpeta
-const mk = () => fs.mkdirSync('./prueba')
-// mk()
+import express, { urlencoded } from "express"
+const app = express()
 
 
+app.use(express.json())
+app.use(express.urlencoded({extended:true}))
 
-const dateReport = (user) => {
-    let date = Date()
-    fs.appendFileSync('./text.txt', `${user}- ${date}\n`, 'utf-8')
-}
-// dateReport("kuka")
-
-const readDateReport = () => {
-    try {
-        const read = fs.readFileSync("./text.tt", 'utf-8')
-        console.log("🚀 ~ file: index.js:46 ~ readDateReport ~ read", read)
-    } catch (error) {
-        console.log("🚀 ~ file: index.js:47 ~ readDateReport ~ error", error.code)
-    }
-}
-// readDateReport()
-// --------------------------------------------------
-// fs con callbacks
-// cb=callback
-function name(nombre, fn) {
-    return fn(nombre)
-}
-function saludar(nombre) {
-    console.log(`hola ${nombre}`)
-}
-// name("kuka", saludar)
-
-// fs.writeFile(ruta, dato, cb)
-const writecb = () => fs.writeFile('./fstext.txt', "texto con callback", error => {
-    if (error) {
-        console.log("🚀 ~ file: index.js:68 ~ error", error)
-    } else {
-        console.log("esta todo ok, el archivo se creo con exito")
-    }
-})
-// writecb()
-
-// funciones closure
-function apellido(params) {
-    console.log("🚀 ~ file: index.js:74 ~ params", params)
-}
-function hola() {
-    return apellido("lolo")
-}
-// hola()
-
-
-// fs.unlink(ruta, cb)
-const delcb = () => fs.unlink('/fstext.txt', error => {
-    if (error) {
-        console.log("🚀 ~ file: index.js:87 ~ delcb ~ error", error.code)
-    }
-    console.log("🚀 se boorro")
+app.get("/", (peticion, respuesta) => {
+    respuesta.status(202).send("getAll")
 })
 
-// delcb()
+app.get("/:id/:name", (req, res) => {
+    console.log("🚀 ~ file: index.js:23 ~ app.get ~ req", req.params)
+    res.status(200).send({ type: "getByID", paramns: req.params })
+    
+})
 
-// -----------------------
-// ejercicio
-// Escribir un programa ejecutable bajo node.js que realice las siguientes acciones:
-// A) Abra una terminal en el directorio del archivo y ejecute la instrucción: npm init -y.
-//     Esto creará un archivo especial (lo veremos más adelante) de nombre package.json
 
-// B) Lea el archivo package.json y declare un objeto con el siguiente formato y datos:
-// const info = {
-//     contenidoStr: (contenido del archivo leído en formato string),
-//     contenidoObj: (contenido del archivo leído en formato objeto),
-//     size: (tamaño en bytes del archivo)
-// }
-
-const r = () => fs.readFile("./package.json", (error, data) => {
-    const info = {
-        contenidoStr: "",
-        contenidoObj: "",
-        size: 0
-    }
-    if (error) throw error;
-    info.contenidoStr = JSON.stringify(data)
-    info.contenidoObj = JSON.parse(data)
-    info.size = info.contenidoStr.length
-
-    const dataStr = JSON.stringify(info, null, 2)
-    fs.writeFile('./info.txt', dataStr, error => {
-        if (error) throw error;
-        console.log("🚀 ~se creo el archivo con la info:", info)
+app.post("/", (req, res) => {
+    const body = req.body
+    console.log("🚀 ~ file: index.js:31 ~ app.post ~ body", body)
+    res.status(200).send({
+        type: "post", message: body
     })
 })
 
-// r()
 
-// C) Muestre por consola el objeto info luego de leer el archivo
-// D) Guardar el objeto info en un archivo llamado info.txt dentro de la misma carpeta de package.json
-// E) Incluir el manejo de errores (con throw new Error)
-// Aclaraciones:
-// - Utilizar la lectura y escritura de archivos en modo asincrónico con callbacks.
-// - Consigna B): Para deserializar un string con contenido JSON utilizar JSON.parse (convierte string en object).
-// - Consigna C): Para serializar un objeto (convertirlo a string) y guardarlo en un archivo utilizar JSON.stringify.
+app.listen(8080, () => {
+    console.log("el servidor esta de 10")
+})
 
-// Ayuda:
-// Para el Punto 3 considerar usar JSON.stringify(info, null, 2) para preservar el formato de representación del objeto en el archivo (2 representa en este caso la cantidad de espacios de indentación usadas al representar el objeto como string).
-// --------------------------------------------------------------
-// fs con promesas
-let info
-const readPromise = () => {
-    fs.promises.readFile('./info.txt', 'utf-8')
-        .then(data => {
-            info = data
-            return info
-        })
-        .then(info => console.log("🚀 ~ file: index.js:142 ~ readPromise ~ info", info))
-        .catch(error => {
-            console.log("🚀 ~ file: index.js:147 ~ readPromise ~ error", error)
-        })
 
-}
 
-// console.log("🚀 ~ file: index.js:141 ~ readPromise ~ readPromise", readPromise())
-// readPromise()
-let dataAA
-const readPromiseAA = async () => {
-    try {
-        dataAA = await fs.promises.readFile('./info.txt', 'utf-8')
-        console.log("🚀 ~ file: index.js:158 ~ readPromiseAA ~ data", dataAA)
 
-    } catch (error) {
-        console.log("🚀 ~ file: index.js:161 ~ readPromiseAA ~ error", error)
 
-    }
-
-}
-// readPromiseAA()

@@ -1,9 +1,9 @@
 {
   "name": "bakend",
   "version": "1.0.0",
-  "description": "",
+  "description": "\"nuestra api\"",
+  "main": "server.js",
   "type": "module",
-  "main": "index.js",
   "scripts": {
     "start": "nodemon .",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -12,7 +12,6 @@
     "type": "git",
     "url": "git+https://github.com/osvalttek/bakend.git"
   },
-  "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {

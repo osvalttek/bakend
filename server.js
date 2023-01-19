@@ -1,17 +1,37 @@
 import express from "express"
-import morgan from "morgan"
-import routes from "./routes/index.js"
+import { createServer } from "http"
+import { Server } from "socket.io"
+
+// esto lo tengo que hacer porque estoy trabajando con type: modelule
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
 
 const app = express()
+const httpServer = createServer(app)
+const io = new Server(httpServer)
 
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
 
-// middleware de terceros
-app.use(morgan('tiny'))
+app.use(express.static("public"))
 
-app.use("/api", routes)
-
-app.listen(8080, () => {
-    console.log("servidor ok")
+app.get("/", (req, res) => {
+    res.sendFile(`${__dirname}/index.html`)
 })
+
+
+io.on("connection", (socket) => {
+    console.log("hola", socket.id)
+    socket.emit("pepe", "hola como estas? soy el servidor")
+    socket.on("respuesta", data => {
+        console.log("🚀", data)
+    })
+
+
+})
+
+
+
+
+httpServer.listen(3000, () => console.log("servidor ok"))

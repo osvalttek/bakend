@@ -1,17 +1,18 @@
 {
   "name": "bakend",
   "version": "1.0.0",
-  "description": "\"nuestra api\"",
-  "main": "server.js",
+  "description": "",
   "type": "module",
+  "main": "server.js",
   "scripts": {
-    "start": "nodemon .",
+    "server": "nodemon .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/osvalttek/bakend.git"
   },
+  "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
@@ -23,6 +24,6 @@
   },
   "dependencies": {
     "express": "^4.18.2",
-    "morgan": "^1.10.0"
+    "socket.io": "^4.5.4"
   }
 }

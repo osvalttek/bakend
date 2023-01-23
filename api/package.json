@@ -1,24 +1,16 @@
 {
-  "name": "bakend",
+  "name": "api",
   "version": "1.0.0",
   "description": "",
-  "type": "module",
   "main": "server.js",
+  "type": "module",
   "scripts": {
-    "server": "nodemon .",
+    "start": "nodemon .",
     "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/osvalttek/bakend.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/osvalttek/bakend/issues"
-  },
-  "homepage": "https://github.com/osvalttek/bakend#readme",
   "devDependencies": {
     "nodemon": "^2.0.20"
   },

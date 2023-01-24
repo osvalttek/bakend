@@ -10,8 +10,29 @@ const io = new Server(httpServer, {
     }
 });
 
+const rooms = {
+    room1: [{
+        user: "yo",
+        message: "sala1"
+    }],
+    room2: [{
+        user: "tu",
+        message: "sala2"
+    }],
+    room3: [{
+        user: "el",
+        message: "sala3"
+    }],
+
+}
+
+
 io.on("connection", (socket) => {
     // console.log("hola", socket.id)
+    socket.on("room", room => {
+        socket.join(rooms[room])
+        io.to(rooms[room]).emit("messages", rooms[room])
+    })
 });
 
 httpServer.listen(3000, () => {

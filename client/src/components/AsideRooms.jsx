@@ -1,8 +1,12 @@
-import React from 'react'
+import {useContext} from 'react'
+import { chatContext } from '../context/ChatProvider'
+
 
 const AsideRooms = () => {
+
+
   return (
-    <aside>Aside</aside>
+    <aside className='w-1/5 border-2 border-[#ff6347]'>Aside</aside>
   )
 }
 

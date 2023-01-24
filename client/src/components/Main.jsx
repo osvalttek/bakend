@@ -4,7 +4,7 @@ import ChatContainer from './ChatContainer'
 
 const Main = () => {
   return (
-    <main>
+    <main className='flex h-3/4 gap-3'>
         <AsideRooms/>
         <ChatContainer/>
     </main>

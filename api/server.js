@@ -25,21 +25,20 @@ const rooms = {
     }],
 
 }
-
-
 io.on("connection", (socket) => {
-    // console.log("hola", socket.id)
+   
     socket.on("room", room => {
         socket.join(room)
         io.to(room).emit("messages", rooms[room])
     })
 
     socket.on("newMessage", newMessage => {
-        console.log(newMessage)
-        rooms[newMessage[1]].push(
-            newMessage[0]
+        const [messages, room]=newMessage
+        rooms[room].push(
+            messages
         )
-        io.to(newMessage[1]).emit("messages",rooms[newMessage[1]])
+        socket.join(room)
+        io.to(room).emit("messages",rooms[room])
     })
 
 });

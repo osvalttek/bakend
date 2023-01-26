@@ -1,8 +1,11 @@
-import React from 'react'
+import{useContext} from 'react'
+import { chatContext } from '../context/ChatProvider'
+
 
 const Header = () => {
+  const {roomSelected}=useContext(chatContext)
   return (
-    <header className='h-1/4'>Header</header>
+    <header className='h-1/4'>{roomSelected}</header>
   )
 }
 

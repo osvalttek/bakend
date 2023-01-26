@@ -14,35 +14,28 @@ const ChatProvider = ({ children }) => {
     setRoomSelected(room);
   };
 
-  const emmitMessage=(dataMessage)=>{
-    socket.emit("newMessage", dataMessage)
-  }
+  const emmitMessage = (dataMessage) => {
+    socket.emit("newMessage", dataMessage);
+  };
 
   useEffect(() => {
     socket.emit("room", roomSelected);
-    // socket.on("messages", (messages) => {
-    //   setMessages(messages);
-    // });
-    return () => {
-      socket.off("room");
-      // socket.off("messages");
-    };
-  }, [roomSelected]);
 
-  useEffect(() => {
     socket.on("messages", (messages) => {
       setMessages(messages);
     });
+
     return () => {
+      socket.off("room");
       socket.off("messages");
     };
-  }, [newMessages, roomSelected, emmitMessage]);
+  }, [roomSelected]);
 
   const dataChatContext = {
     roomSelected,
     newMessages,
     changeRoom,
-    emmitMessage
+    emmitMessage,
   };
   return <Provider value={dataChatContext}>{children}</Provider>;
 };

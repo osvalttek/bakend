@@ -1,7 +1,7 @@
 import express from "express"
 import morgan from "morgan"
 import routes from "./routes/index.js"
-
+import db from "./db/db.js"
 const app = express()
 
 app.use(express.json())

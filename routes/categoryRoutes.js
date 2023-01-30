@@ -4,7 +4,7 @@ import db from "../db/db.js";
 
 const categoryRoutes = Router()
 
-categoryRoutes.get("/", (req, res) => {
+categoryRoutes.get("/", (req, res, next) => {
     const query = `SELECT id, name FROM category`
     db.query(query, (err, result, fields) => {
         // console.log("🚀 ~ file: categoryRoutes.js:12 ~ db.query ~ fields", fields)

@@ -1,5 +1,6 @@
 import { Router } from "express";
 import db from "../db/db.js";
+import { isUser } from "../utils/middleware.js";
 // import { isUser } from "../utils/middleware.js";
 
 const categoryRoutes = Router()
@@ -33,7 +34,7 @@ categoryRoutes.get("/:id", (req, res) => {
 
 // categoryRoutes.use(isUser)
 
-categoryRoutes.post("/", (req, res, next) => {
+categoryRoutes.post("/", isUser,(req, res, next) => {
     // const { name } = req.body
     // const query = `INSERT INTO category(name) VALUES("${name}")`
     // db.query(query, (err, result, fields) => {

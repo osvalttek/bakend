@@ -21,9 +21,10 @@ productRoutes.get("/:id", (req, res, next) => {
     })
 })
 
-productRoutes.get("/category/:category", (req, res, next) => {
-    // console.log(req.query.category)
-    const { category } = req.params
+productRoutes.get("/search/category", (req, res, next) => {
+    const {category}=req.query
+    console.log("🚀 ~ file: productRoutes.js:26 ~ productRoutes.get ~ category", category)
+    // const { category } = req.params
     const query = "SELECT product.name, product.description,product.stock, product.price, category.name AS category FROM product INNER JOIN category ON category.id=product.categoryid WHERE category.name=?"
     db.query(query, category, (err, result) => {
         if (err) return next(err)

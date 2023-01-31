@@ -4,6 +4,7 @@ import { productRoutes } from "./productRoutes.js"
 import categoryRoutes from "./categoryRoutes.js"
 
 
+
 const routes=Router()
 
 routes.use("/user",userRoutes)

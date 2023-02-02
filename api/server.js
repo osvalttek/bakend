@@ -2,9 +2,12 @@ import express from "express"
 import morgan from "morgan"
 import routes from "./routes/index.js"
 import db from "./db/db.js"
-import { Category, Product, User } from "./models/index.js"
-// console.log("🚀 ~ file: server.js:6 ~ Category", Category)
+import "dotenv/config"
 
+import {Product, User } from "./models/index.js"
+
+const port=process.env.API_PORT;
+console.log("🚀 ~ file: server.js:11 ~ port", port)
 const app = express()
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
@@ -15,7 +18,7 @@ app.use(morgan('tiny'))
 app.use("/api", routes)
 
 await db.sync({force:true}).then(() => {
-    app.listen(8080, () => {
+    app.listen(port, () => {
         console.log("servidor ok ")
     })
 }

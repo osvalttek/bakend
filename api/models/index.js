@@ -4,10 +4,10 @@ import User from "./User.js";
 
 Category.hasMany(Product, {
     foreignKey: {
-        field: "categoryid"
+        allowNull: false
     },
-    onDelete:"CASCADE"
+    onDelete: "CASCADE"
 })
 Product.belongsTo(Category)
 
-export { Category, Product, User}
+export { Category, Product, User }

@@ -40,7 +40,7 @@ class CategoryController {
                 }
             })
             if (results[0] == 0) throw "No se pudo actualizar"
-            res.status(200).send({ success: true, message: "Categorias actualizada con exito", results })
+            res.status(200).send({ success: true, message: "Categoria actualizada con exito", results })
 
         } catch (error) {
             res.status(400).send({ success: false, message: error })
@@ -54,7 +54,7 @@ class CategoryController {
                 }
             })
             if (results == 0) throw "No se pudo eliminar la categoria"
-            res.status(200).send({ success: true, message: "Categorias actualizada con exito", results })
+            res.status(200).send({ success: true, message: "Categoria eliminada con exito", results })
         } catch (error) {
             res.status(400).send({ success: false, message: error })
         }

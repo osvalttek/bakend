@@ -6,7 +6,7 @@ Category.hasMany(Product, {
     foreignKey: {
         allowNull: false
     },
-    onDelete: "CASCADE"
+    onDelete: "NO ACTION"
 })
 Product.belongsTo(Category)
 

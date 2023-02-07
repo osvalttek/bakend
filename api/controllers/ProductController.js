@@ -1,14 +1,7 @@
 import { Product, Category } from "../models/index.js";
 
+
 class ProductController {
-    // static async createPoduct(req, res) {
-    //     try {
-    //         const results = await Product.create(req.body)
-    //          res.status(200).send({ succes: true, message: "Producto creado con exito", results })
-    //     } catch (error) {
-    //          res.status(400).send({ success: false, message: error })
-    //     }
-    // }
     static async createPoduct(req, res) {
         try {
             const { categoryName } = req.body
@@ -17,17 +10,12 @@ class ProductController {
                     name: categoryName
                 }
             })
-            // console.log("🚀 ~ file: ProductController.js:21 ~ ProductController ~ createPoduct ~ category", category)
             req.body.CategoryId = category[0].id
             const results = await Product.create(req.body)
-            // esta es la funcion que me regala sequelize cuando hacemos las doble relaciones, en este caso no las podemos usar porque el foreign key es allownull false
-            // results.setCategory(category[0].id)
-            // const results = await Product.create(req.body)
             res.status(200).send({ succes: true, message: "Producto creado con exito", results })
         } catch (error) {
             res.status(400).send({ success: false, message: error })
         }
-
     }
 
     static async getAllProducts(req, res) {
@@ -37,21 +25,26 @@ class ProductController {
                 include: [{ model: Category, attributes: ["name"] }]
             })
             if (results.length === 0) throw "No hay productos"
-            res.status(200).send({ succes: true, message: "", results })
+            res.status(200).send({ succes: true, message: "Productos encontrados", results })
         } catch (error) {
             res.status(400).send({ success: false, message: error })
         }
     }
 
+    static async getOneProduct(req) {
+        const results = await Product.findOne({
+            where: {
+                id: req.params.id
+            },
+            attributes: ["id", "name", "description", "price", "stock"],
+            include: { model: Category, attributes: ["name"] }
+        })
+        return results
+    }
+
     static async getProductById(req, res) {
         try {
-            const results = await Product.findOne({
-                where: {
-                    id: req.params.id
-                },
-                attributes: ["id", "name", "description", "price", "stock"],
-                include: { model: Category, attributes: ["name"] }
-            })
+            const results = await ProductController.getOneProduct(req)
             if (!results) throw "No se encontro ningun producto"
             res.status(200).send({ succes: true, message: "Producto encontrado con exito", results })
         } catch (error) {
@@ -63,19 +56,13 @@ class ProductController {
             const dataCategory = await Category.findAll({
                 attributes: ["id", "name"]
             })
-            
-            const results = await Product.findOne({
-                where: {
-                    id: req.params.id
-                },
-                attributes: ["id", "name", "description", "price", "stock"],
-                include: { model: Category, attributes: ["name"] }
-
-            })
+            const results = await ProductController.getOneProduct(req)
             if (!results) throw "No se encontro ningun producto"
-            results.setCategory(dataCategory)
-            res.status(200).send({ succes: true, message: "Producto encontrado para modificar", results })
-
+            res.status(200).send({
+                succes: true, message: "Producto encontrado para modificar", results: {
+                    results, dataCategory
+                }
+            })
         } catch (error) {
             res.status(400).send({ success: false, message: error })
         }
@@ -99,8 +86,8 @@ class ProductController {
         try {
             const results = await Product.destroy(
                 {
-                    where:{
-                        id:req.params.id
+                    where: {
+                        id: req.params.id
                     }
                 }
             )

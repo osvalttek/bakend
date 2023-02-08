@@ -1,9 +1,10 @@
 import CreateCategory from "./Components/CreateCategory";
 import DeleteCategory from "./Components/DeleteCategory";
 import GetAllCategories from "./Components/GetAllCategories";
+import GetAllProducts from "./Components/GetAllProducts";
 import GetCategoryById from "./Components/GetCategoryById";
 import UpdateCategory from "./Components/UpdateCategory";
-import { useCreateCategoryMutation } from "./store/service/categoryService";
+
 
 function App() {
   return (
@@ -23,6 +24,10 @@ function App() {
       <hr />
       <h1 className="text-3xl font-bold underline">deleteCategory</h1>
       <DeleteCategory />
+      <br />
+      <hr />
+      <br />
+      <GetAllProducts />
     </>
   );
 }

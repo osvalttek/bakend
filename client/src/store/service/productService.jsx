@@ -14,33 +14,27 @@ export const products = createApi({
       query: (id) => `/getproductbyupdate/${id}`,
     }),
     createPoduct: builder.mutation({
-      query: () => ({
-        query: (body) => ({
-          url: ``,
-          method: "POST",
-          body,
-        }),
-        invalidatesTags: ["Products"],
+      query: (body) => ({
+        url: ``,
+        method: "POST",
+        body,
       }),
+      invalidatesTags: ["Products"],
     }),
     updatePoduct: builder.mutation({
-      query: () => ({
-        query: ({ id, ...body }) => ({
-          url: `/${id}`,
-          method: "PUT",
-          body,
-        }),
-        invalidatesTags: ["Products"],
+      query: (body) => ({
+        url: `/${id}`,
+        method: "PUT",
+        body,
       }),
+      invalidatesTags: ["Products"],
     }),
     deletePoduct: builder.mutation({
-      query: () => ({
-        query: (id) => ({
-          url: `/${id}`,
-          method: "DELETE",
-        }),
-        invalidatesTags: ["Products"],
+      query: (id) => ({
+        url: `/${id}`,
+        method: "DELETE",
       }),
+      invalidatesTags: ["Products"],
     }),
   }),
 });

@@ -22,7 +22,7 @@ class ProductController {
         try {
             const results = await Product.findAll({
                 attributes: ["id", "name", "price", "stock"],
-                include: [{ model: Category, attributes: ["name"] }]
+                include: [{ model: Category, attributes: ["name"]}]
             })
             if (results.length === 0) throw "No hay productos"
             res.status(200).send({ succes: true, message: "Productos encontrados", results })

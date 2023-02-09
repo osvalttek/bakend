@@ -1,16 +1,19 @@
+import { useEffect } from "react";
 import {
   useGetAllProductsQuery,
   useGetProductByIdQuery,
   useGetProductByUpdateQuery,
-  useCreatePoductMutation,
+  useCreateProductMutation,
+  useUpdateProductMutation,
+  useDeleteProductMutation,
 } from "../store/service/productService";
 
 const GetAllProducts = () => {
-    const allProducts = useGetAllProductsQuery();
-    console.log(
-      "🚀 ~ file: GetAllProducts.jsx:5 ~ GetAllProducts ~ allProducts",
-      allProducts
-    );
+  // const allProducts = useGetAllProductsQuery();
+  // console.log(
+  //   "🚀 ~ file: GetAllProducts.jsx:5 ~ GetAllProducts ~ allProducts",
+  //   allProducts
+  // );
   // -------------------
   //   const productByID = useGetProductByIdQuery(1);
   //   console.log(
@@ -21,25 +24,58 @@ const GetAllProducts = () => {
   //   const productByUpdate=useGetProductByUpdateQuery(1)
   //   console.log("🚀 ~ file: GetAllProducts.jsx:20 ~ GetAllProducts ~ productByUpdate", productByUpdate)
   // -------------------
-  const [createProduct, results] = useCreatePoductMutation();
-  console.log("🚀 ~ file: GetAllProducts.jsx:25 ~ GetAllProducts ~ resulst", results)
-//   console.log(
-//     "🚀 ~ file: GetAllProducts.jsx:25 ~ GetAllProducts ~ createProduct",
-//     createProduct
-//   );
+  const [createProduct, results] = useCreateProductMutation();
+  // console.log("🚀 ~ file: GetAllProducts.jsx:25 ~ GetAllProducts ~ resulst", results)
+  //   console.log(
+  //     "🚀 ~ file: GetAllProducts.jsx:25 ~ GetAllProducts ~ createProduct",
+  //     createProduct
+  //   );
   const handleClickCreate = () => {
     createProduct({
-        name:"Asado",
-        description:"carne a la parrilla",
-        price:300,
-        stock:10,
-        categoryName:"asado"
-    })
+      name: "torta de chocolate",
+      description: "carne a la parrilla",
+      price: 300,
+      stock: 10,
+      categoryName: "tortas",
+    });
   };
   // -------------------
-  const handleClickUpdate = () => {};
+
+  const [updateProduct] = useUpdateProductMutation();
+  // console.log("🚀 ~ file: GetAllProducts.jsx:43 ~ GetAllProducts ~ updateProduct", updateProduct)
+  const handleClickUpdate = () => {
+    updateProduct({
+      id: 1,
+      name: "torta de jamon",
+    });
+  };
   // -------------------
-  const handleClickDelete = () => {};
+  const [deleteProduct, { data: resultDelete, isError, isLoading, error }] =
+    useDeleteProductMutation();
+  console.log(
+    "🚀 ~ file: GetAllProducts.jsx:54 ~ GetAllProducts ~ error",
+    error && error
+  );
+  // console.log(
+  //   "🚀 ~ file: GetAllProducts.jsx:54 ~ GetAllProducts ~ isLoading",
+  //   isLoading
+  // );
+  // console.log(
+  //   "🚀 ~ file: GetAllProducts.jsx:54 ~ GetAllProducts ~ isError",
+  //   isError
+  // );
+  // console.log(
+  //   "🚀 ~ file: GetAllProducts.jsx:53 ~ GetAllProducts ~ resultDelete",
+  //   resultDelete
+  // );
+  const handleClickDelete = () => {
+    deleteProduct(11);
+  };
+  useEffect(() => {
+    resultDelete && alert(resultDelete.message);
+    error && alert(error.data.message);
+  }, [error, resultDelete]);
+
   return (
     <div>
       <button

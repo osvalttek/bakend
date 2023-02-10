@@ -1,8 +1,16 @@
 import { User } from "../models/index.js";
 
+
 class UserController {
     static async createUser(req, res) {
         try {
+            // const admin = await User.count({
+            //     where: {
+            //         id: 1
+            //     }
+            // })
+           
+            //  if (admin===0)  req.body.role="admin"
             const results = await User.create(req.body)
             res.status(200).send({ succes: true, message: "Usuario creado con exito", results })
         } catch (error) {
@@ -66,11 +74,26 @@ class UserController {
 
     static async login(req, res) {
         try {
+            const { email, password } = req.body
+            const results = await User.findOne({
+                where: {
+                    email
+                }
+            })
+
+            if (!results) throw "No se encontro el usuario"
+            const isEqual = await results.validatePassword(password)
+            if (!isEqual) throw "No se encontro el usuario"
+
+            res.status(200).send({ success: true, message: "Usuario logueado" })
+
 
         } catch (error) {
-
+            res.status(400).send({ success: false, message: error })
         }
     }
+
+
     static async me(req, res) {
         try {
 

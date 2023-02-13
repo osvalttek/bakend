@@ -35,7 +35,7 @@ User.init({
     },
     email: {
         type: Dt.STRING,
-        
+        unique: true  
     }
 }, {
     sequelize: db,

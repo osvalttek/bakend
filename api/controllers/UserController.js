@@ -1,4 +1,5 @@
 import { User } from "../models/index.js";
+import { generateToken, verify } from "../config/token.js";
 
 
 class UserController {
@@ -9,10 +10,9 @@ class UserController {
             //         id: 1
             //     }
             // })
-           
             //  if (admin===0)  req.body.role="admin"
             const results = await User.create(req.body)
-            res.status(200).send({ succes: true, message: "Usuario creado con exito", results })
+            res.status(200).send({ succes: true, message: "Usuario creado con exito" })
         } catch (error) {
             res.status(400).send({ success: false, message: error })
         }
@@ -80,33 +80,29 @@ class UserController {
                     email
                 }
             })
-
             if (!results) throw "No se encontro el usuario"
             const isEqual = await results.validatePassword(password)
             if (!isEqual) throw "No se encontro el usuario"
 
+            const payload = {
+                email: results.email,
+                role: results.role
+            }
+
+            const token = generateToken(payload)
+            res.cookie("token", token)
             res.status(200).send({ success: true, message: "Usuario logueado" })
-
-
         } catch (error) {
             res.status(400).send({ success: false, message: error })
         }
     }
 
-
     static async me(req, res) {
-        try {
-
-        } catch (error) {
-
-        }
+        res.status(200).send({ success: true, message: "Usuario logueado", result: req.user })
     }
     static async logOut(req, res) {
-        try {
-
-        } catch (error) {
-
-        }
+        res.clearCookie("token");
+        res.send(204)
     }
 }
 

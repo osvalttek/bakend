@@ -39,15 +39,15 @@ const router = createBrowserRouter([
       //   },
 
       {
-        path: "",
+        path: "admin",
         element: <Isadmin />,
         children: [
           {
-            path: "admin/createproduct",
+            path: "createproduct",
             element: <CreateProduct />,
           },
           {
-            path: "admin/deleteproduct",
+            path: "deleteproduct",
             element: <DeleteProduct />,
           },
         ],

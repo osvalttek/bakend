@@ -100,6 +100,7 @@ class UserController {
     static async me(req, res) {
         res.status(200).send({ success: true, message: "Usuario logueado", result: req.user })
     }
+    
     static async logOut(req, res) {
         res.clearCookie("token");
         res.send(204)

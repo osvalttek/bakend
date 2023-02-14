@@ -30,6 +30,22 @@ export const users = createApi({
         method: "DELETE",
       }),
     }),
+    login: builder.mutation({
+      query: (body) => ({
+        url: "/login",
+        method: "POST",
+        body,
+      }),
+    }),
+    me: builder.query({
+      query: () => "/me",
+    }),
+    logout: builder.mutation({
+      query: () => ({
+        url: "/logout",
+        method: "POST",
+      }),
+    }),
   }),
 });
 
@@ -39,4 +55,7 @@ export const {
   useCreateUserMutation,
   useUpdateUserMutation,
   useDeleteUserMutation,
+  useLoginMutation,
+  useMeQuery,
+  useLogoutMutation,
 } = users;

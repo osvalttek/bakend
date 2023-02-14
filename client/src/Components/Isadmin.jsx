@@ -1,11 +1,13 @@
 import { Outlet } from "react-router-dom";
-
-
+import { useMeQuery } from "../store/service/userService";
 
 const Isadmin = () => {
-  const isAdmin = true;
+  const { data, isLoading, error } = useMeQuery();
+ 
 
-  return isAdmin ? <Outlet/> : <h1>Acceso denegado</h1>;
+   return !isLoading && data?.result.role === "admin" ? <Outlet /> : <h1>{error.data.message}</h1>;
+  
+
 };
 
 export default Isadmin;

@@ -4,3 +4,4 @@ DB_NAME=dbname
 DB_USERNAME=user
 DB_PASSWORD=
 DB_HOST=localhost
+SECRET=

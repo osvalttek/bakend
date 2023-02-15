@@ -5,6 +5,7 @@ import db from "./db/db.js"
 import "dotenv/config"
 import cookieParser from "cookie-parser"
 
+
 const port = process.env.API_PORT;
 
 const app = express()
@@ -14,6 +15,9 @@ app.use(express.urlencoded({ extended: true }))
 // middleware de terceros
 app.use(cookieParser())
 app.use(morgan('tiny'))
+
+
+
 
 app.use("/api", routes)
 

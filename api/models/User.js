@@ -17,15 +17,26 @@ class User extends Model {
 User.init({
     name: {
         type: Dt.STRING(50),
-        allowNull: false
+        allowNull: false,
+        validate: {
+            is: ["[a-zA-ZáéíóúüÁÉÍÓÚÜñÑ]+$/u", 'i'],
+            len: [2, 10],
+        }
     },
     lastName: {
         type: Dt.STRING(50),
-        allowNull: false
+        allowNull: false,
+        validate: {
+            is: ["[a-zA-ZáéíóúüÁÉÍÓÚÜñÑ]+$/u", 'i'],
+            len: [2, 10],
+        }
     },
     password: {
         type: Dt.STRING,
-        allowNull: false
+        allowNull: false,
+        validate: {
+            len: [8, 10],
+        }
     },
     role: {
         type: Dt.STRING(25)
@@ -35,7 +46,11 @@ User.init({
     },
     email: {
         type: Dt.STRING,
-        unique: true  
+        unique: true,
+        allowNull: false,
+        validate: {
+            isEmail: true,
+        }
     }
 }, {
     sequelize: db,
@@ -50,8 +65,8 @@ User.beforeCreate(async (user) => {
 })
 
 User.afterCreate(async user => {
-    if (user.id===1) { 
-      return await user.update({role:"admin"})
+    if (user.id === 1) {
+        return await user.update({ role: "admin" })
     }
 })
 

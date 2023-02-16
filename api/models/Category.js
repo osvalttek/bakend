@@ -8,7 +8,12 @@ class Category extends Model { }
 Category.init({
     name: {
         type: Dt.STRING,
-        allowNull: false
+        allowNull: false,
+        unique:true,
+        validate:{
+            is: ["[a-zA-ZáéíóúüÁÉÍÓÚÜñÑ\s]+$", 'i'],
+            len: [2, 50],
+        }
     }, 
 }, {
     sequelize: db,

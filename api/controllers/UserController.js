@@ -11,7 +11,8 @@ class UserController {
             //     }
             // })
             //  if (admin===0)  req.body.role="admin"
-            const results = await User.create(req.body)
+            const {name, lastName, password, email}=req.body
+            const results = await User.create({name, lastName, password, email})
             res.status(200).send({ succes: true, message: "Usuario creado con exito" })
         } catch (error) {
             res.status(400).send({ success: false, message: error })

@@ -19,7 +19,7 @@ User.init({
         type: Dt.STRING(50),
         allowNull: false,
         validate: {
-            is: ["[a-zA-ZáéíóúüÁÉÍÓÚÜñÑ]+$/u", 'i'],
+            is: /^[a-zA-ZáéíóúüÁÉÍÓÚÜñÑ]+$/u,
             len: [2, 10],
         }
     },
@@ -27,7 +27,7 @@ User.init({
         type: Dt.STRING(50),
         allowNull: false,
         validate: {
-            is: ["[a-zA-ZáéíóúüÁÉÍÓÚÜñÑ]+$/u", 'i'],
+            is: /^[a-zA-ZáéíóúüÁÉÍÓÚÜñÑ]+$/u,
             len: [2, 10],
         }
     },

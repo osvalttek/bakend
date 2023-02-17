@@ -20,6 +20,7 @@ import { useMeQuery } from "../store/service/userService";
 
 const Isadmin = () => {
   const { data, isLoading} = useMeQuery();
+  console.log("🚀 ~ file: Isadmin.jsx:23 ~ Isadmin ~ data", data)
   return isLoading ? (
     <h2>Cargando</h2>
   ) : (

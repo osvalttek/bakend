@@ -1,8 +1,5 @@
 import { verify } from "../config/token.js"
 
-
-
-
 const authMe = (req, res, next) => {
     try {
         const token = req.cookies.token

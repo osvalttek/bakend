@@ -6,6 +6,8 @@ import CreateProduct from "../views/CreateProduct";
 import DeleteProduct from "../views/DeleteProduct";
 import Home from "../views/Home";
 import Login from "../views/Login";
+import LogOut from "../views/LogOut";
+import Profile from "../views/Profile";
 import Register from "../views/Register";
 
 const router = createBrowserRouter([
@@ -14,30 +16,17 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       {
-        path: "/home",
+        path: "/",
         element: <Home />,
       },
       {
         path: "/products",
         element: <AllProducts />,
       },
-      //   {
-      //     path: "/admin/createproduct",
-      //     element: (
-      //       <Isadmin>
-      //         <CreateProduct />
-      //       </Isadmin>
-      //     ),
-      //   },
-      //   {
-      //     path: "admin/deleteproduct",
-      //     element: (
-      //       <Isadmin>
-      //         <DeleteProduct />
-      //       </Isadmin>
-      //     ),
-      //   },
-
+      {
+        path: "/profile",
+        element: <Profile />,
+      },
       {
         path: "admin",
         element: <Isadmin />,
@@ -59,6 +48,7 @@ const router = createBrowserRouter([
     element: <Register />,
   },
   { path: "/login", element: <Login /> },
+  { path: "/logout", element: <LogOut /> },
 ]);
 
 export default router;

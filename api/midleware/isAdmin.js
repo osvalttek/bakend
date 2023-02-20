@@ -5,7 +5,6 @@ const isAdmin = (req, res, next) => {
     if (role === "admin") {
         next()
     } else {
-
         res.status(401).send({ success: false, message: "Unauthorized" })
     }
 }

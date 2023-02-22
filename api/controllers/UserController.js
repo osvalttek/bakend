@@ -1,12 +1,17 @@
 import { User } from "../models/index.js";
 import { generateToken, verify } from "../config/token.js";
+import registerMail from "../utils/mails/registerMail.js";
+
 
 
 class UserController {
     static async createUser(req, res) {
         try {
-            const {name, lastName, password, email}=req.body
-            const results = await User.create({name, lastName, password, email})
+            const { name, lastName, password, email } = req.body
+            const results = await User.create({ name, lastName, password, email })
+
+            await registerMail(name, email)
+
             res.status(200).send({ succes: true, message: "Usuario creado con exito" })
         } catch (error) {
             res.status(400).send({ success: false, message: error })
@@ -95,7 +100,7 @@ class UserController {
     static async me(req, res) {
         res.status(200).send({ success: true, message: "Usuario logueado", result: req.user })
     }
-    
+
     static async logOut(req, res) {
         res.clearCookie("token");
         res.send(204)

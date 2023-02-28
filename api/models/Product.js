@@ -33,6 +33,9 @@ Product.init({
             isNumeric:true
         }
     },
+    image:{
+        type:Dt.STRING
+    }
 
 }, {
     sequelize: db,

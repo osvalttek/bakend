@@ -6,7 +6,7 @@ class ProductController {
         // esto es por si trabajo con aupload.array o upload.fiels
         // const file = req.files
         try {
-            req.body.image = req.file.filename
+            req.body.image = req.files[0].filename
             const { categoryName } = req.body
             const category = await Category.findOrCreate({
                 where: {

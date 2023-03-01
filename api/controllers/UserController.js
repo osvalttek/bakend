@@ -9,9 +9,7 @@ class UserController {
         try {
             const { name, lastName, password, email } = req.body
             const results = await User.create({ name, lastName, password, email })
-
-            await registerMail(name, email)
-
+            // await registerMail(name, email)
             res.status(200).send({ succes: true, message: "Usuario creado con exito" })
         } catch (error) {
             res.status(400).send({ success: false, message: error })

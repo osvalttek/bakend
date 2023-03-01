@@ -16,7 +16,7 @@ const Login = () => {
   } = useForm();
 
   const submit = (data) => login(data);
-  console.log("🚀 ~ file: Login.jsx:19 ~ Login ~ submit", submit)
+  // console.log("🚀 ~ file: Login.jsx:19 ~ Login ~ submit", submit)
 
   // const handleSubmit = (e) => {
   //   e.preventDefault();
@@ -41,11 +41,11 @@ const Login = () => {
       >
         <input
           type="text"
-           defaultValue="pedlo"
+          //  defaultValue="pedlo"
           {...register("email", {
             required: true,
             minLength: 4,
-            maxLength: 20,
+            maxLength: 100,
             // pattern:
             //   /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/i,
           })}

@@ -6,7 +6,7 @@ const Header = () => {
   const [logout] = useLogoutMutation();
 
   const data = useMeQuery();
-   console.log("🚀 ~ file: Header.jsx:10 ~ Header ~ data", data);
+  //  console.log("🚀 ~ file: Header.jsx:10 ~ Header ~ data", data);
 
   const handleClick = () => {
     logout();

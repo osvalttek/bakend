@@ -1,4 +1,7 @@
 import { Product, Category } from "../models/index.js";
+import path from "path"
+import { fileURLToPath } from 'url';
+import fs from "fs"
 
 
 class ProductController {
@@ -37,12 +40,12 @@ class ProductController {
         }
     }
 
-    static async getOneProduct(req) {
+    static async getOneProduct(id) {
         const results = await Product.findOne({
             where: {
-                id: req.params.id
+                id
             },
-            attributes: ["id", "name", "description", "price", "stock"],
+            attributes: ["id", "name", "description", "price", "stock", "image"],
             include: { model: Category, attributes: ["name"] }
         })
         return results
@@ -50,8 +53,22 @@ class ProductController {
 
     static async getProductById(req, res) {
         try {
-            const results = await ProductController.getOneProduct(req)
+            const { id } = req.params
+            const results = await ProductController.getOneProduct(id)
+            // console.log("🚀 ~ file: ProductController.js:57 ~ ProductController ~ getProductById ~ results", results)
             if (!results) throw "No se encontro ningun producto"
+            // voy a buscar la imagen en mis archivos
+            const __filename = fileURLToPath(import.meta.url);
+            const __dirname = path.dirname(__filename);
+            const imageUrl = path.resolve(__dirname, `../uploads/${results.image}`)
+
+            const imageBase64 = fs.readFileSync(imageUrl, "base64")
+
+
+            results.dataValues.image = `data:image/png;base64,${imageBase64}`
+
+
+
             res.status(200).send({ succes: true, message: "Producto encontrado con exito", results })
         } catch (error) {
             res.status(400).send({ success: false, message: error })

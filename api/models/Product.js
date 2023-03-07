@@ -34,7 +34,7 @@ Product.init({
         }
     },
     image:{
-        type:Dt.STRING
+        type:Dt.TEXT
     }
 
 }, {

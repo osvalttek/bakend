@@ -2,25 +2,61 @@ import { Product, Category } from "../models/index.js";
 import path from "path"
 import { fileURLToPath } from 'url';
 import fs from "fs"
-
-
+import { initializeApp } from "firebase/app";
+import { firebaseConfig } from "../config/firebase.js";
+import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/storage'
+initializeApp(firebaseConfig)
+const storage = getStorage()
 class ProductController {
+    // ---------------------------
+    // static async createProduct(req, res) {
+    //     try {
+    //         const img = req.file
+    //         const { categoryName, name, description, price, stock } = req.body
+    //         const [categoryInstance] = await Category.findOrCreate({
+    //             where: {
+    //                 name: categoryName
+    //             }
+    //         })
+    //         const metaData = {
+    //             contentType: img.mimetype
+    //         }
+    //         const storageRef = ref(storage, `products/${name}/${img.originalname}`)
+    //         const resultado = await uploadBytesResumable(storageRef, img.buffer, metaData)
+    //         const image = await getDownloadURL(resultado.ref)
+    //         const results = await Product.create({ name, description, price, stock, image, CategoryId: categoryInstance.id })
+    //         res.status(200).send({ success: true, message: "Producto creado con éxito", results })
+    //     } catch (error) {
+    //         res.status(400).send({ success: false, message: error })
+    //     }
+    // }
+    // ---------------------------
     static async createPoduct(req, res) {
-        // esto es por si trabajo con aupload.array o upload.fiels
-        // const file = req.files
         try {
-            req.body.image = req.files[0].filename
+            const img = req.file
             const { categoryName } = req.body
             const category = await Category.findOrCreate({
                 where: {
                     name: categoryName
                 }
             })
-
             req.body.CategoryId = category[0].id
-            const { name, description, price, stock, image, CategoryId } = req.body
+            const metaData = {
+                contentType: img.mimetype
+            }
+            const { name, description, price, stock, CategoryId } = req.body
+            const storageRef = ref(storage, `products/${name}/${img.originalname}`)
+            const resultado = await uploadBytesResumable(storageRef, img.buffer, metaData)
+            const image = await getDownloadURL(resultado.ref)
+            req.body.image = image
+            console.log("test", name, description, price, stock, image, CategoryId)
 
-            const results = await Product.create({ name, description, price, stock, image, CategoryId })
+            // const results = await Product.create({ name, description, price, stock, image, CategoryId })
+            const results = await Product.create(req.body)
+
+            console.log("🚀 ~ file: ProductController.js:52 ~ ProductController ~ createPoduct ~ results", results)
+
+
             res.status(200).send({ succes: true, message: "Producto creado con exito", results })
         } catch (error) {
             res.status(400).send({ success: false, message: error })

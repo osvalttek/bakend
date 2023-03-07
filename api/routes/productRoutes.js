@@ -12,7 +12,7 @@ productRoutes.get("/:id", ProductController.getProductById)
 // productRoutes.use(isAdmin)
 productRoutes.get("/getproductbyupdate/:id", ProductController.getProductByUpdate)
 // productRoutes.post("/",upload.fields([{ name: 'image', maxCount: 2 }]) , ProductController.createPoduct)
-productRoutes.post("/", upload.array('image',2), ProductController.createPoduct)
+productRoutes.post("/", upload.single('image'), ProductController.createPoduct)
 productRoutes.put("/:id", ProductController.updatePoduct)
 productRoutes.delete("/:id", ProductController.deletePoduct)
 
